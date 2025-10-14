@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bici Tiangue - Catálogo de Bicicletas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #e94560;
+            --accent-color: #0f3460;
+            --light-color: #f5f5f5;
+            --dark-color: #16213e;
+            --text-color: #333;
+            --background-color: #f9f9f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .logo-img {
+            height: 90px; /* ajusta tamaño según tu logo */
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-sticker {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: rotate(-3deg);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo-sticker::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+            pointer-events: none;
+        }
+        
+        /* Social Buttons */
+        .social-buttons {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .facebook-btn {
+            background-color: #3b5998;
+        }
+        
+        .instagram-btn {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        
+        .link-btn {
+            background-color: var(--accent-color);
+        }
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-right: 80px;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 30px;
+            background-color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-container i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('bannerTiangue.jpg');
+            background-size: cover;
+            background-position: center 90%;
+            height: 400px;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h2,
+        .hero p {
+            display: none;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Categories */
+        .categories {
+            margin-bottom: 40px;
+        }
+        
+        .categories h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .category-tab {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .category-tab.active {
+            color: var(--secondary-color);
+        }
+        
+        .category-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        .category-tab:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Bikes Grid */
+        .bikes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .bike-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .bike-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .bike-image {
+            height: 200px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .bike-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .bike-card:hover .bike-image img {
+            transform: scale(1.05);
+        }
+        
+        .bike-info {
+            padding: 20px;
+        }
+        
+        .bike-type {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .bike-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .bike-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .search-container {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .social-buttons {
+                position: static;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .category-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .category-tab {
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="logoTiangue.jpg" alt="Bici Tiangue" class="logo-img">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#ruta">Bici de Ruta</a></li>
+                    <li><a href="#montana">Bici de Montaña</a></li>
+                    <li><a href="#gravel">Bici de Gravel</a></li>
+                </ul>
+            </nav>
+            <div class="search-container">
+                <input type="text" placeholder="Buscar...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        
+        <!-- Social Buttons -->
+        <div class="social-buttons">
+            <a href="https://www.facebook.com/@bicitiangue/?" target="_blank" class="social-btn facebook-btn">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/bicitiangue/" target="_blank" class="social-btn instagram-btn">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <!-- 🔗 Nuevo botón de enlace general -->
+            <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Flnk.bio%2FBicitiangue%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExeUx1QkdqaUp1SWRmdG9VTQEe3fjaKxjxT8dXV7uPYIy2VZiKI6VOvkJmlVi1K6Oe5M32VJ2FX_9-zgcjpNE_aem_7-qrhwF983QeGhNGMsjQsg&h=AT3Ol5SVsNHtM2vbQSgLlHZlFAeWHZ5wk-qfLjvZU5CHdw2RkoEIn7h83z4whBbhF_1InrRT172k1-rGhosCqSyy79lFg0BWVWnRbqxySE3ALfJeFj7WH-ad0OWj1w7HD5Zz5wZ9dFXtIiB374SXwg" target="_blank" class="social-btn link-btn">
+            <i class="fas fa-link"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Encuentra tu bicicleta perfecta</h2>
+            <p>Explora nuestro catálogo de bicicletas de montaña, ruta y gravel. Calidad, diseño y rendimiento en un solo lugar.</p>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2>Nuestras Categorías</h2>
+            
+            <div class="category-tabs">
+                <button class="category-tab active" data-category="montana">Bicicletas de Montaña</button>
+                <button class="category-tab" data-category="ruta">Bicicletas de Ruta</button>
+                <button class="category-tab" data-category="gravel">Bicicletas de Gravel</button>
+            </div>
+            
+            <!-- Bikes Grid -->
+            <div class="bikes-grid" id="bikes-container">
+                <!-- Bicicletas de Montaña -->
+                <div class="bike-card" data-category="montana">
+                    <div class="bike-image">
+                        <img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Trek Marlin 5">
+                    </div>
+                    <div class="bike-info">
+                        <div class="bike-type">MTB</div>
+                        <h3 class="bike-name">Trek Marlin 5</h3>
+                        <div class="bike-price">$899.99</div>
+                    </div>
+                </div>
+                
+                <div class="bike-card" data-category="montana">
+                    <div class="bike-image">
+                        <img src="https://images.unsplash.com/photo-1535052498073-e434e51e30e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Trek Xcaliber M">
+                    </div>
+                    <div class="bike-info">
+                        <div class="bike-type">MTB</div>
+                        <h3 class="bike-name">Trek Xcaliber M</h3>
+                        <div class="bike-price">$1,299.99</div>
+                    </div>
+                </div>
+                
+                <div class="bike-card" data-category="montana">
+                    <div class="bike-image">
+                        <img src="https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="BMC Fourstroke">
+                    </div>
+                    <div class="bike-info">
+                        <div class="bike-type">MTB</div>
+                        <h3 class="bike-name">BMC Fourstroke</h3>
+                        <div class="bike-price">$4,999.99</div>
+                    </div>
+                </div>
+                
+                <!-- Bicicletas de Ruta -->
+                <div class="bike-card" data-category="ruta">
+                    <div class="bike-image">
+                        <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="D'Route Halley">
+                    </div>
+                    <div class="bike-info">
+                        <div class="bike-type">RUTA</div>
+                        <h3 class="bike-name">D'Route Halley</h3>
+                        <div class="bike-price">$549.99</div>
+                    </div>
+                </div>
+                
+                <div class="bike-card" data-category="ruta">
+                    <div class="bike-image">
+                        <img src="https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Specialized Tarmac">
+                    </div>
+                    <div class="bike-info">
+                        <div class="bike-type">RUTA</div>
+                        <h3 class="bike-name">Specialized Tarmac</h3>
+                        <div class="bike-price">$3,799.99</div>
+                    </div>
+                </div>
+                
+                <div class="bike-card" data-category="ruta">
+                    <div class="bike-image">
+                        <img src="https://images.unsplash.com/photo-1535052498073-e434e51e30e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Cannondale SuperSix">
+                    </div>
+                    <div class="bike-info">
+                        <div class="bike-type">RUTA</div>
+                        <h3 class="bike-name">Cannondale SuperSix</h3>
+                        <div class="bike-price">$4,299.99</div>
+                    </div>
+                </div>
+                
+                <!-- Bicicletas de Gravel -->
+                <div class="bike-card" data-category="gravel">
+                    <div class="bike-image">
+                        <img src="https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Canyon Grail">
+                    </div>
+                    <div class="bike-info">
+                        <div class="bike-type">GRAVEL</div>
+                        <h3 class="bike-name">Canyon Grail</h3>
+                        <div class="bike-price">$2,499.99</div>
+                    </div>
+                </div>
+                
+                <div class="bike-card" data-category="gravel">
+                    <div class="bike-image">
+                        <img src="https://images.unsplash.com/photo-1535052498073-e434e51e30e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Specialized Diverge">
+                    </div>
+                    <div class="bike-info">
+                        <div class="bike-type">GRAVEL</div>
+                        <h3 class="bike-name">Specialized Diverge</h3>
+                        <div class="bike-price">$2,899.99</div>
+                    </div>
+                </div>
+                
+                <div class="bike-card" data-category="gravel">
+                    <div class="bike-image">
+                        <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Trek Checkpoint">
+                    </div>
+                    <div class="bike-info">
+                        <div class="bike-type">GRAVEL</div>
+                        <h3 class="bike-name">Trek Checkpoint</h3>
+                        <div class="bike-price">$2,199.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Bici Tiangue</h3>
+                    <p>Tu destino para encontrar la bicicleta perfecta. Ofrecemos una amplia selección de bicicletas de montaña, ruta y gravel para todos los niveles.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Dirección: Mod 4, Plaza Las Maderas, Km8, Carr. a Masaya, Managua</p>
+                    <p><i class="fas fa-phone"></i> Teléfono: +505 8875 7904</p>
+                    <p><i class="fas fa-envelope"></i> Email: info@bicitiangue.com</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2016 Bici Tiangue. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Función para filtrar bicicletas por categoría
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const bikeCards = document.querySelectorAll('.bike-card');
+            
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remover clase activa de todas las pestañas
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Agregar clase activa a la pestaña clickeada
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Mostrar/ocultar bicicletas según la categoría
+                    bikeCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Función de búsqueda
+            const searchInput = document.querySelector('.search-container input');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                bikeCards.forEach(card => {
+                    const bikeName = card.querySelector('.bike-name').textContent.toLowerCase();
+                    const bikeType = card.querySelector('.bike-type').textContent.toLowerCase();
+                    
+                    if (bikeName.includes(searchTerm) || bikeType.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
